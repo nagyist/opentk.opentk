@@ -379,12 +379,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Creates a translation matrix.
         /// </summary>
         /// <param name="x">X translation.</param>
         /// <param name="y">Y translation.</param>
         /// <param name="result">The resulting 2D translation matrix.</param>
-        public static void Create2DTranslation(float x, float y, out Matrix3x2 result)
+        public static void CreateTranslation(float x, float y, out Matrix3x2 result)
         {
             result.Row0.X = 0;
             result.Row0.Y = 0;
@@ -395,11 +395,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Creates a translation matrix.
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <param name="result">The resulting 2D translation matrix.</param>
-        public static void Create2DTranslation(in Vector2 vector, out Matrix3x2 result)
+        public static void CreateTranslation(in Vector2 vector, out Matrix3x2 result)
         {
             result.Row0.X = 0;
             result.Row0.Y = 0;
@@ -410,27 +410,27 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Creates a translation matrix.
         /// </summary>
         /// <param name="x">X translation.</param>
         /// <param name="y">Y translation.</param>
         /// <returns>The resulting 2D translation matrix.</returns>
         [Pure]
-        public static Matrix3x2 Create2DTranslation(float x, float y)
+        public static Matrix3x2 CreateTranslation(float x, float y)
         {
-            Create2DTranslation(x, y, out Matrix3x2 result);
+            CreateTranslation(x, y, out Matrix3x2 result);
             return result;
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Creates a translation matrix.
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <returns>The resulting 2D translation matrix.</returns>
         [Pure]
-        public static Matrix3x2 Create2DTranslation(Vector2 vector)
+        public static Matrix3x2 CreateTranslation(Vector2 vector)
         {
-            Create2DTranslation(vector.X, vector.Y, out Matrix3x2 result);
+            CreateTranslation(vector.X, vector.Y, out Matrix3x2 result);
             return result;
         }
 
