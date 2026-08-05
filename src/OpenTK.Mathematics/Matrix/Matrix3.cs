@@ -833,6 +833,209 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Builds a 2D rotation matrix for 2D operations.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting 2D rotation matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DRotation(float angle)
+        {
+            Create2DRotation(angle, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a 2D rotation matrix for 2D operations.
+        /// </summary>
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting 2D rotation matrix.</param>
+        public static void Create2DRotation(float angle, out Matrix3 result)
+        {
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
+
+            result = Identity;
+            result.Row0.X = cos;
+            result.Row0.Y = sin;
+            result.Row1.X = -sin;
+            result.Row1.Y = cos;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <returns>The resulting 2D translation matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DTranslation(float x, float y)
+        {
+            Create2DTranslation(x, y, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="vector">The translation vector.</param>
+        /// <returns>The resulting 2D translation matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DTranslation(Vector2 vector)
+        {
+            Create2DTranslation(vector.X, vector.Y, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <param name="result">The resulting 2D translation matrix.</param>
+        public static void Create2DTranslation(float x, float y, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row2.X = x;
+            result.Row2.Y = y;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="vector">The translation vector.</param>
+        /// <param name="result">The resulting 2D translation matrix.</param>
+        public static void Create2DTranslation(in Vector2 vector, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row2.X = vector.X;
+            result.Row2.Y = vector.Y;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x and y axes.</param>
+        /// <returns>A 2D scale matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DScale(float scale)
+        {
+            Create2DScale(scale, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x, and y axes.</param>
+        /// <returns>A 2D scale matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DScale(Vector2 scale)
+        {
+            Create2DScale(in scale, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <returns>A 2D scale matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DScale(float x, float y)
+        {
+            Create2DScale(x, y, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x and y axes.</param>
+        /// <param name="result">A 2D scale matrix.</param>
+        public static void Create2DScale(float scale, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row0.X = scale;
+            result.Row1.Y = scale;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x and y axes.</param>
+        /// <param name="result">A 2D scale matrix.</param>
+        public static void Create2DScale(in Vector2 scale, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row0.X = scale.X;
+            result.Row1.Y = scale.Y;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix for 2D operations.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <param name="result">A 2D scale matrix.</param>
+        public static void Create2DScale(float x, float y, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row0.X = x;
+            result.Row1.Y = y;
+        }
+
+        /// <summary>
+        /// Builds a 2D shear matrix for 2D operations.
+        /// </summary>
+        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
+        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DShear(float shearX, float shearY)
+        {
+            Create2DShear(shearX, shearY, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a 2D shear matrix for 2D operations.
+        /// </summary>
+        /// <param name="vector">Vector of the shearing factors.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
+        [Pure]
+        public static Matrix3 Create2DShear(Vector2 vector)
+        {
+            Create2DShear(vector, out Matrix3 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a 2D shear matrix for 2D operations.
+        /// </summary>
+        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
+        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
+        /// <param name="result">The resulting 2D shear matrix.</param>
+        public static void Create2DShear(float shearX, float shearY, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row1.X = shearX;
+            result.Row0.Y = shearY;
+        }
+
+        /// <summary>
+        /// Builds a 2D shear matrix for 2D operations.
+        /// </summary>
+        /// <param name="vector">Vector of the shearing factors.</param>
+        /// <param name="result">The resulting 2D shear matrix.</param>
+        public static void Create2DShear(Vector2 vector, out Matrix3 result)
+        {
+            result = Identity;
+            result.Row1.X = vector.X;
+            result.Row0.Y = vector.Y;
+        }
+
+        /// <summary>
         /// Adds two instances.
         /// </summary>
         /// <param name="left">The left operand of the addition.</param>
