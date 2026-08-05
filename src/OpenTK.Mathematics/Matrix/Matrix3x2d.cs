@@ -270,17 +270,10 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <param name="result">The resulting Matrix3x2d instance.</param>
+        [Obsolete("Use Create2DRotation instead.")]
         public static void CreateRotation(double angle, out Matrix3x2d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
-
-            result.Row0.X = cos;
-            result.Row0.Y = sin;
-            result.Row1.X = -sin;
-            result.Row1.Y = cos;
-            result.Row2.X = 0;
-            result.Row2.Y = 0;
+            Create2DRotation(angle, out result);
         }
 
         /// <summary>
@@ -289,9 +282,10 @@ namespace OpenTK.Mathematics
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix3x2d instance.</returns>
         [Pure]
+        [Obsolete("Use Create2DRotation instead.")]
         public static Matrix3x2d CreateRotation(double angle)
         {
-            CreateRotation(angle, out Matrix3x2d result);
+            Create2DRotation(angle, out Matrix3x2d result);
             return result;
         }
 
@@ -382,86 +376,54 @@ namespace OpenTK.Mathematics
         /// Builds a rotation matrix.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting Matrix3x2d instance.</param>
-        public static void Create2DRotation(double angle, out Matrix3x2d result)
+        /// <returns>The resulting Matrix3x2d instance.</returns>
+        [Pure]
+        public static Matrix3x2d Create2DRotation(double angle)
         {
-            CreateRotation(angle, out result);
+            return Create2DRotation(angle);
         }
 
         /// <summary>
         /// Builds a rotation matrix.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting Matrix3x2d instance.</returns>
+        /// <param name="result">The resulting Matrix3x2d instance.</param>
+        public static void Create2DRotation(double angle, out Matrix3x2d result)
+        {
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
+
+            result.Row0.X = cos;
+            result.Row0.Y = sin;
+            result.Row1.X = -sin;
+            result.Row1.Y = cos;
+            result.Row2.X = 0;
+            result.Row2.Y = 0;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <returns>The resulting 2D translation matrix.</returns>
         [Pure]
-        public static Matrix3x2d Create2DRotation(double angle)
+        public static Matrix3x2d Create2DTranslation(double x, double y)
         {
-            return CreateRotation(angle);
+            Create2DTranslation(x, y, out Matrix3x2d result);
+            return result;
         }
 
         /// <summary>
-        /// Creates a scale matrix.
+        /// Creates a translation matrix.
         /// </summary>
-        /// <param name="scale">Single scale factor for the x and y axes.</param>
-        /// <param name="result">A scale matrix.</param>
-        public static void Create2DScale(double scale, out Matrix3x2d result)
-        {
-            CreateScale(scale, out result);
-        }
-
-        /// <summary>
-        /// Creates a scale matrix.
-        /// </summary>
-        /// <param name="scale">Single scale factor for the x and y axes.</param>
-        /// <returns>A scale matrix.</returns>
+        /// <param name="vector">The translation vector.</param>
+        /// <returns>The resulting 2D translation matrix.</returns>
         [Pure]
-        public static Matrix3x2d Create2DScale(double scale)
+        public static Matrix3x2d Create2DTranslation(Vector2d vector)
         {
-            return CreateScale(scale);
-        }
-
-        /// <summary>
-        /// Creates a scale matrix.
-        /// </summary>
-        /// <param name="scale">Scale factors for the x and y axes.</param>
-        /// <param name="result">A scale matrix.</param>
-        public static void Create2DScale(Vector2d scale, out Matrix3x2d result)
-        {
-            CreateScale(scale, out result);
-        }
-
-        /// <summary>
-        /// Creates a scale matrix.
-        /// </summary>
-        /// <param name="scale">Scale factors for the x and y axes.</param>
-        /// <returns>A scale matrix.</returns>
-        [Pure]
-        public static Matrix3x2d Create2DScale(Vector2d scale)
-        {
-            return CreateScale(scale);
-        }
-
-        /// <summary>
-        /// Creates a scale matrix.
-        /// </summary>
-        /// <param name="x">Scale factor for the x axis.</param>
-        /// <param name="y">Scale factor for the y axis.</param>
-        /// <param name="result">A scale matrix.</param>
-        public static void Create2DScale(double x, double y, out Matrix3x2d result)
-        {
-            CreateScale(x, y, out result);
-        }
-
-        /// <summary>
-        /// Creates a scale matrix.
-        /// </summary>
-        /// <param name="x">Scale factor for the x axis.</param>
-        /// <param name="y">Scale factor for the y axis.</param>
-        /// <returns>A scale matrix.</returns>
-        [Pure]
-        public static Matrix3x2d Create2DScale(double x, double y)
-        {
-            return CreateScale(x, y);
+            Create2DTranslation(vector.X, vector.Y, out Matrix3x2d result);
+            return result;
         }
 
         /// <summary>
@@ -496,27 +458,92 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        /// Creates a scale matrix.
         /// </summary>
-        /// <param name="x">X translation.</param>
-        /// <param name="y">Y translation.</param>
-        /// <returns>The resulting 2D translation matrix.</returns>
+        /// <param name="scale">Single scale factor for the x and y axes.</param>
+        /// <returns>A scale matrix.</returns>
         [Pure]
-        public static Matrix3x2d Create2DTranslation(double x, double y)
+        public static Matrix3x2d Create2DScale(double scale)
         {
-            Create2DTranslation(x, y, out Matrix3x2d result);
+            return CreateScale(scale);
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x and y axes.</param>
+        /// <returns>A scale matrix.</returns>
+        [Pure]
+        public static Matrix3x2d Create2DScale(Vector2d scale)
+        {
+            return CreateScale(scale);
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <returns>A scale matrix.</returns>
+        [Pure]
+        public static Matrix3x2d Create2DScale(double x, double y)
+        {
+            return CreateScale(x, y);
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x and y axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void Create2DScale(double scale, out Matrix3x2d result)
+        {
+            CreateScale(scale, out result);
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x and y axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void Create2DScale(Vector2d scale, out Matrix3x2d result)
+        {
+            CreateScale(scale, out result);
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void Create2DScale(double x, double y, out Matrix3x2d result)
+        {
+            CreateScale(x, y, out result);
+        }
+
+        /// <summary>
+        /// Builds a 2D shear matrix.
+        /// </summary>
+        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
+        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
+        [Pure]
+        public static Matrix3x2d Create2DShear(double shearX, double shearY)
+        {
+            Create2DShear(shearX, shearY, out Matrix3x2d result);
             return result;
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        /// Builds a 2D shear matrix.
         /// </summary>
-        /// <param name="vector">The translation vector.</param>
-        /// <returns>The resulting 2D translation matrix.</returns>
+        /// <param name="vector">Vector of the shearing factors.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
         [Pure]
-        public static Matrix3x2d Create2DTranslation(Vector2d vector)
+        public static Matrix3x2d Create2DShear(Vector2d vector)
         {
-            Create2DTranslation(vector.X, vector.Y, out Matrix3x2d result);
+            Create2DShear(vector, out Matrix3x2d result);
             return result;
         }
 
@@ -539,19 +566,6 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Builds a 2D shear matrix.
         /// </summary>
-        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
-        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
-        /// <returns>The resulting 2D shear matrix.</returns>
-        [Pure]
-        public static Matrix3x2d Create2DShear(double shearX, double shearY)
-        {
-            Create2DShear(shearX, shearY, out Matrix3x2d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Builds a 2D shear matrix.
-        /// </summary>
         /// <param name="vector">Vector of the shearing factors.</param>
         /// <param name="result">The resulting 2D shear matrix.</param>
         public static void Create2DShear(Vector2d vector, out Matrix3x2d result)
@@ -562,18 +576,6 @@ namespace OpenTK.Mathematics
             result.Row1.Y = 0;
             result.Row2.X = 0;
             result.Row2.Y = 0;
-        }
-
-        /// <summary>
-        /// Builds a 2D shear matrix.
-        /// </summary>
-        /// <param name="vector">Vector of the shearing factors.</param>
-        /// <returns>The resulting 2D shear matrix.</returns>
-        [Pure]
-        public static Matrix3x2d Create2DShear(Vector2d vector)
-        {
-            Create2DShear(vector, out Matrix3x2d result);
-            return result;
         }
 
         /// <summary>

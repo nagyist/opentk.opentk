@@ -831,26 +831,32 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Builds a 2D rotation matrix for 2D operations.
         /// </summary>
-        /// <param name="x">X translation.</param>
-        /// <param name="y">Y translation.</param>
-        /// <param name="result">The resulting 2D translation matrix.</param>
-        public static void Create2DTranslation(double x, double y, out Matrix3d result)
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <returns>The resulting 2D rotation matrix.</returns>
+        [Pure]
+        public static Matrix3d Create2DRotation(double angle)
         {
-            result = Identity;
-            result.Row2 = new Vector3d(x, y, 1);
+            Create2DRotation(angle, out Matrix3d result);
+            return result;
         }
 
         /// <summary>
-        /// Creates a translation matrix for 2D operations.
+        /// Builds a 2D rotation matrix for 2D operations.
         /// </summary>
-        /// <param name="vector">The translation vector.</param>
-        /// <param name="result">The resulting 2D translation matrix.</param>
-        public static void Create2DTranslation(in Vector2d vector, out Matrix3d result)
+        /// <param name="angle">The counter-clockwise angle in radians.</param>
+        /// <param name="result">The resulting 2D rotation matrix.</param>
+        public static void Create2DRotation(double angle, out Matrix3d result)
         {
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
+
             result = Identity;
-            result.Row2 = new Vector3d(vector.X, vector.Y, 1);
+            result.Row0.X = cos;
+            result.Row0.Y = sin;
+            result.Row1.X = -sin;
+            result.Row1.Y = cos;
         }
 
         /// <summary>
@@ -876,6 +882,29 @@ namespace OpenTK.Mathematics
         {
             Create2DTranslation(vector.X, vector.Y, out Matrix3d result);
             return result;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <param name="result">The resulting 2D translation matrix.</param>
+        public static void Create2DTranslation(double x, double y, out Matrix3d result)
+        {
+            result = Identity;
+            result.Row2 = new Vector3d(x, y, 1);
+        }
+
+        /// <summary>
+        /// Creates a translation matrix for 2D operations.
+        /// </summary>
+        /// <param name="vector">The translation vector.</param>
+        /// <param name="result">The resulting 2D translation matrix.</param>
+        public static void Create2DTranslation(in Vector2d vector, out Matrix3d result)
+        {
+            result = Identity;
+            result.Row2 = new Vector3d(vector.X, vector.Y, 1);
         }
 
         /// <summary>
@@ -953,31 +982,27 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Builds a 2D rotation matrix for 2D operations.
+        /// Builds a 2D shear matrix for 2D operations.
         /// </summary>
-        /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <param name="result">The resulting 2D rotation matrix.</param>
-        public static void Create2DRotation(double angle, out Matrix3d result)
+        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
+        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
+        [Pure]
+        public static Matrix3d Create2DShear(double shearX, double shearY)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
-
-            result = Identity;
-            result.Row0.X = cos;
-            result.Row0.Y = sin;
-            result.Row1.X = -sin;
-            result.Row1.Y = cos;
+            Create2DShear(shearX, shearY, out Matrix3d result);
+            return result;
         }
 
         /// <summary>
-        /// Builds a 2D rotation matrix for 2D operations.
+        /// Builds a 2D shear matrix for 2D operations.
         /// </summary>
-        /// <param name="angle">The counter-clockwise angle in radians.</param>
-        /// <returns>The resulting 2D rotation matrix.</returns>
+        /// <param name="vector">Vector of the shearing factors.</param>
+        /// <returns>The resulting 2D shear matrix.</returns>
         [Pure]
-        public static Matrix3d Create2DRotation(double angle)
+        public static Matrix3d Create2DShear(Vector2d vector)
         {
-            Create2DRotation(angle, out Matrix3d result);
+            Create2DShear(vector, out Matrix3d result);
             return result;
         }
 
@@ -997,19 +1022,6 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Builds a 2D shear matrix for 2D operations.
         /// </summary>
-        /// <param name="shearX">Factor by which X is sheared as a function of Y.</param>
-        /// <param name="shearY">Factor by which Y is sheared as a function of X.</param>
-        /// <returns>The resulting 2D shear matrix.</returns>
-        [Pure]
-        public static Matrix3d Create2DShear(double shearX, double shearY)
-        {
-            Create2DShear(shearX, shearY, out Matrix3d result);
-            return result;
-        }
-
-        /// <summary>
-        /// Builds a 2D shear matrix for 2D operations.
-        /// </summary>
         /// <param name="vector">Vector of the shearing factors.</param>
         /// <param name="result">The resulting 2D shear matrix.</param>
         public static void Create2DShear(Vector2d vector, out Matrix3d result)
@@ -1017,18 +1029,6 @@ namespace OpenTK.Mathematics
             result = Identity;
             result.Row1.X = vector.X;
             result.Row0.Y = vector.Y;
-        }
-
-        /// <summary>
-        /// Builds a 2D shear matrix for 2D operations.
-        /// </summary>
-        /// <param name="vector">Vector of the shearing factors.</param>
-        /// <returns>The resulting 2D shear matrix.</returns>
-        [Pure]
-        public static Matrix3d Create2DShear(Vector2d vector)
-        {
-            Create2DShear(vector, out Matrix3d result);
-            return result;
         }
 
         /// <summary>
